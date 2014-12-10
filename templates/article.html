@@ -1,6 +1,6 @@
 {% extends 'index.html' %}
 {% block sidebar %}{% if article.sidebarimage %}{{ article.sidebarimage }}{% else %}{{ super() }}{% endif %}{% endblock %}
-{% block title %}{{ article.title|striptags }} // {{ super() }}{% endblock title %}
+{% block title %}{{ article.title|striptags }}{% endblock title %}
 
 {% block head_css %}
 <link rel="stylesheet" href="{{ SITEURL }}/theme/css/pygments.css">
@@ -27,6 +27,7 @@ $(document).ready(function(){
     <section class="post">
       <header class="post-header">
         <h1>{{ article.title }}</h1>
+        <div class="lead">{{ article.summary }}</div>
         <p class="post-meta">
         {% for tag in article.tags %}
         <a class="post-tag" href="{{ SITEURL }}/{{ tag.url }}">{{ tag }}</a>

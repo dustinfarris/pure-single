@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div class="pure-u">
   <div class="content">
     <!-- A wrapper for all the blog posts -->
-    <div class="posts">
+    <div class="posts" itemscope itemtype="http://schema.org/Blog">
       <h1 class="content-subhead">
         {% block pagetitle %}
         {% if not articles_page.has_previous() %}
@@ -23,23 +23,28 @@
       {% set latex = True %}
       {{ article.latex }}
       {% endif %}
-      <section class="post">
-        <header class="post-header">
-          <h2 class="post-title">
-            <a href="{{ SITEURL }}/{{ article.url }}">
-              {{ article.title }}
-            </a>
-          </h2>
-          <div class="summary">{{ article.summary }}</div>
-          <p class="post-meta">
-          in
-          <a href="{{ SITEURL }}/{{ article.category.url }}">
-            {{ article.category }}
+      <div class="post" itemscope itemtype="http://schema.org/BlogPosting">
+        <h2 class="post-title" itemprop="name">
+          <a href="{{ SITEURL }}/{{ article.url }}" itemprop="url">
+            {{ article.title }}
           </a>
-          &middot; {{ article.locale_date }}
-          </p>
-        </header>
-      </section>
+        </h2>
+        <div class="summary" itemprop="description">
+          {{ article.summary }}
+        </div>
+        <p class="post-meta">
+        in
+        <a href="{{ SITEURL }}/{{ article.category.url }}">
+          {{ article.category }}
+        </a>
+        &middot;
+        <span itemprop="datePublished">
+          <time datetime="{{ article.date|strftime('%Y-%m-%d') }}">
+            {{ article.date|strftime('%-d %b %Y') }}
+          </time>
+        </span>
+        </p>
+      </div>
       {% endfor %}
       {% include 'pagination.html' %}
       {% include 'footer.html' %}
